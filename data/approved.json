@@ -1,0 +1,11 @@
+{
+    "kiokizz": {
+        "votestrength": "default"
+    },
+    "mattclarke": {
+        "votestrength": 10000
+    },
+    "aggroed": {
+        "votestrength": 9000
+    }
+}
