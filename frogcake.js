@@ -218,14 +218,14 @@ function cast_votes(draw_winners) {
 function claim_rewards() {
     console.log(`Starting claim_rewards()`, true);
     hive.api.getAccounts([ACCOUNT.NAME], function (err, result) {
-        console.log(`Get Account Details for Pending Vests... Error: ${err}, Result: ${result}`)
+        console.log(`Get Account Details for Pending Vests...Error: ${JSON.stringify(err, null, 4)}, Result: ${JSON.stringify(result, null, 4)}`)
         if (result) {
-            let hbd_reward = result[0].reward_hbd_balance
-            let hive_reward = result[0].reward_hive_balance
-            let hive_power_in_vests = result[0].reward_vesting_balance
+            let hbd_reward = parseFloat(result[0].reward_hbd_balance);
+            let hive_reward = parseFloat(result[0].reward_hive_balance);
+            let hive_power_in_vests = parseFloat(result[0].reward_vesting_balance);
             if (hbd_reward > 0 || hive_reward > 0 || hive_power_in_vests > 0) {
-                hive.broadcast.claimRewardBalance(ACCOUNT.ACTIVE_KEY, ACCOUNT.NAME, hive_reward, hbd_reward, hive_power_in_vests, function (err, result) {
-                    console.log(`Claiming Rewards Balance... Error: ${err}, Result: ${result}`)
+                hive.broadcast.claimRewardBalance(ACCOUNT.ACTIVE_KEY, ACCOUNT.NAME, `${hive_reward.toFixed(3)} HIVE`, `${hbd_reward.toFixed(3)} HBD`, `${hive_power_in_vests} VESTS`, function (err, result) {
+                    console.log(`Claiming Rewards Balance... Error: ${JSON.stringify(err, null, 4)}, Result: ${JSON.stringify(result, null, 4)}`)
                 });
             } else console.log(`No Rewards To Claim.`);
         }
